@@ -8,9 +8,11 @@ Gem::Specification.new do |gem|
   gem.version       = Obtuse::VERSION
   gem.authors       = ["Utkarsh Kukreti"]
   gem.email         = ["utkarshkukreti@gmail.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.description   = "A Stack-oriented programming language, optimized for " +
+                      "brevity."
+  gem.summary       = "A Stack-oriented programming language, optimized for " +
+                      "brevity."
+  gem.homepage      = "https://github.com/utkarshkukreti/obtuse"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
