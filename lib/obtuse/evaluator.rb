@@ -1,5 +1,7 @@
 module Obtuse
   class Evaluator
+    attr_reader :stack
+
     def initialize
       @stack     = []
       @parser    = Parser.new
