@@ -9,13 +9,18 @@ module Obtuse
       digits.as(:integer) >> spaces?
     end
 
+    rule :string do
+      str('"') >> (str('"').absent? >> (str('\\"') | any)).repeat.as(:string) >>
+      str('"') >> spaces?
+    end
+
     rule :function do
       %w{+ - * / % ^}.map { |name| str name }.reduce(:|).
         as(:function) >> spaces?
     end
 
     rule :expression do
-      spaces? >> (integer | function).repeat >> spaces?
+      spaces? >> (string | integer | function).repeat >> spaces?
     end
 
     root :expression

@@ -9,12 +9,16 @@ module Obtuse
     def eval(input)
       @transform.apply(@parser.parse(input)).each do |atom|
         case atom
-        when Integer
+        when Integer, String
           push atom
-        when "+", "-", "*", "/", "%", "^"
-          atom = "**" if atom == "^"
+        when :+, :-, :*, :/, :%, :^
+          atom = :** if atom == :^
           y, x = pop, pop
-          push x.send(atom, y)
+          if Integer === x && Integer === y ||
+            String === x && String === y
+            push x.send(atom, y)
+          else
+          end
         end
       end
     end
