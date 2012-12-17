@@ -1,5 +1,7 @@
-require "obtuse/version"
+require "parslet"
 
-module Obtuse
-  # Your code goes here...
-end
+require "obtuse/parser"
+require "obtuse/transform"
+require "obtuse/evaluator"
+
+require "obtuse/version"
