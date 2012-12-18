@@ -86,6 +86,11 @@ module Obtuse
         when :"@"
           x, y, z = pop 3
           push y; push z; push x
+        when :"."
+          x = peek
+          push x if x
+        when :";"
+          pop
         when :Ic
           push pop.to_i.chr
         when :Sg

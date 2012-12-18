@@ -192,6 +192,21 @@ describe Obtuse do
       end
     end
 
+    describe "." do
+      describe "" do
+        e %q{1 2 .}, [1, 2, 2], stack: true
+        e %q{.}, [], stack: true
+      end
+    end
+
+    describe ";" do
+      describe "" do
+        e %q{1 2;}, [1], stack: true
+        e %q{2;}, [], stack: true
+        e %q{;}, [], stack: true
+      end
+    end
+
     describe "Ic" do
       describe "Integer" do
         e "97 Ic", "a"
