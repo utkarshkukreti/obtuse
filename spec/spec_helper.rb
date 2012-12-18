@@ -1,7 +1,8 @@
 require "bundler/setup"
 require "simplecov"
 SimpleCov.start do
-  add_group "Libraries", "/lib"
+  add_group  "Libraries", "/lib"
+  add_filter "/lib/obtuse/cli.rb"
 end
 require "obtuse"
 
