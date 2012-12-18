@@ -44,6 +44,11 @@ module Obtuse
           elsif String === x
             push x.length
           end
+        when :"$"
+          x = pop
+          if String === x
+            push x.chars.sort.join
+          end
         when :Ia
           push stdin.read.chomp
         when :Il

@@ -24,6 +24,10 @@ describe Obtuse do
     describe "#" do
       e %q{"foo bar"#}, 7
     end
+
+    describe "$" do
+      e %q{"abcdcba"$}, "aabbccd"
+    end
   end
 
   describe "Integer Integer" do
