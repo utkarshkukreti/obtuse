@@ -1,29 +1,40 @@
 # Obtuse
 
-TODO: Write a gem description
+Obtuse is a stack-oriented programming language, optimized for brevity.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+### Using Git (recommended)
 
-    gem 'obtuse'
+```
+$ git clone https://github.com/utkarshkukreti/obtuse.git
+$ cd obtuse
+$ bundle install
+$ rake install
+```
 
-And then execute:
+### Using RubyGems
 
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install obtuse
+```
+$ gem install obtuse
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+Run
 
-## Contributing
+```
+$ obtuse
+```
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+to start the interactive REPL.
+
+## Documentation
+
+Check out `spec/obtuse_spec.rb` for all functions and their outputs.
+
+## License
+
+The MIT License.
+
+Copyright (c) 2012, Utkarsh Kukreti.
