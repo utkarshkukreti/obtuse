@@ -57,6 +57,8 @@ module Obtuse
             when :*
               if Integer === y
                 push x * y
+              elsif String === y
+                push x.join(y)
               elsif Array === y
                 first = x.shift
                 push x.reduce([first]) {|fold, el| fold + y + [el] }
