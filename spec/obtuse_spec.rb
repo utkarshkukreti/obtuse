@@ -172,8 +172,6 @@ describe Obtuse do
     end
   end
 
-
-
   describe "Mixture" do
     e "1 2+3-", 0
     e "5 1 4 5 2 3 4 +-+-+-", 0
