@@ -13,7 +13,7 @@ module Obtuse
     def eval(input)
       @transform.apply(@parser.parse(input)).each do |atom|
         case atom
-        when Integer, String
+        when Integer, String, Array
           push atom
         when :+, :-, :*, :/, :%, :^
           atom = :** if atom == :^

@@ -5,5 +5,6 @@ module Obtuse
     rule(string:   simple(:x)) do
       x.to_s.gsub('\\t', "\t").gsub('\\n', "\n").gsub('\\"', '"')
     end
+    rule(array: sequence(:x)) { x }
   end
 end

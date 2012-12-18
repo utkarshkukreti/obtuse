@@ -15,6 +15,10 @@ describe Obtuse do
     describe "String" do
       e %q{"a \n b \n c \t\td\na"}, "a \n b \n c \t\td\na"
     end
+
+    describe "Array" do
+      e %q{["a" 4 -9]}, ["a", 4, -9]
+    end
   end
 
   describe "Functions" do
@@ -84,6 +88,7 @@ describe Obtuse do
 
       describe "String Array" do
         e %q{"%02d %03d %04d"4#%}, "00 001 0002"
+        e %q{"%02d %03d %04d"[0 1 2 3 4 5]%}, "00 001 0002"
       end
     end
 
@@ -106,6 +111,7 @@ describe Obtuse do
 
       describe "Array" do
         e "10##", 10
+        e "[1 2]#", 2
       end
     end
 
@@ -123,6 +129,7 @@ describe Obtuse do
 
       describe "Array" do
         e %q{4#~+++}, 6
+        e %q{[1 2]~+}, 3
       end
     end
 
@@ -144,6 +151,8 @@ describe Obtuse do
       describe "Array" do
         e "1#!", 0
         e "0#!", 1
+        e "[]!", 1
+        e "[1]!", 0
       end
     end
 
