@@ -1,9 +1,11 @@
 module Obtuse
   class Evaluator
+    attr_accessor :stdin
     attr_reader :stack
 
     def initialize
       @stack     = []
+      @stdin     = $stdin
       @parser    = Parser.new
       @transform = Transform.new
     end
@@ -21,6 +23,10 @@ module Obtuse
             push x.send(atom, y)
           else
           end
+        when :Ia
+          push stdin.read.chomp
+        when :Il
+          push stdin.gets.chomp
         end
       end
     end

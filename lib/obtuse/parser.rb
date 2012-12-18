@@ -15,7 +15,7 @@ module Obtuse
     end
 
     rule :function do
-      %w{+ - * / % ^}.map { |name| str name }.reduce(:|).
+      %w{+ - * / % ^ Ia Il}.map { |name| str name }.reduce(:|).
         as(:function) >> spaces?
     end
 

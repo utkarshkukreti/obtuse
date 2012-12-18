@@ -58,4 +58,14 @@ describe Obtuse do
       e '"foo\\"" "bar"+', 'foo"bar'
     end
   end
+
+  describe "" do
+    describe "Ia" do
+      e "Ia", "abc\nbcd", "abc\nbcd"
+    end
+
+    describe "Il" do
+      e "Il", "abc", "abc\nbcd"
+    end
+  end
 end
