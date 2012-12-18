@@ -175,6 +175,10 @@ describe Obtuse do
         e %q{4#~+++}, 6
         e %q{[1 2]~+}, 3
       end
+
+      describe "Lambda" do
+        e '{1 1 +}~', 2
+      end
     end
 
     describe "!" do

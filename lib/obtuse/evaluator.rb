@@ -119,6 +119,8 @@ module Obtuse
             eval x
           elsif Array === x
             @stack += x
+          elsif AST::Lambda === x
+            eval x.expression, true
           end
         when :!
           x = pop
