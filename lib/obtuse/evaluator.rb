@@ -62,6 +62,12 @@ module Obtuse
              (Integer === z || String === z)
             push x.to_s.gsub(y.to_s, z.to_s)
           end
+        when :Sl
+          push pop.to_s.downcase
+        when :Su
+          push pop.to_s.upcase
+        when :Sc
+          push pop.to_s.capitalize
         when :Ia
           push stdin.read.chomp
         when :Il

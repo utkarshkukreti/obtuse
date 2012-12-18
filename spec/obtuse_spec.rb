@@ -124,6 +124,24 @@ describe Obtuse do
       end
     end
 
+    describe "Sl" do
+      describe "String" do
+        e %q{"Foo Bar!" Sl}, "foo bar!"
+      end
+    end
+
+    describe "Su" do
+      describe "String" do
+        e %q{"Foo Bar!" Su}, "FOO BAR!"
+      end
+    end
+
+    describe "Sc" do
+      describe "String" do
+        e %q{"foo bar!" Sc}, "Foo bar!"
+      end
+    end
+
     describe "Ia" do
       e "Ia", "abc\nbcd", "abc\nbcd"
     end
