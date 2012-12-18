@@ -94,6 +94,12 @@ describe Obtuse do
     end
   end
 
+  describe "String Array" do
+    describe "%" do
+      e %q{"%02d %03d %04d"4#%}, "00 001 0002"
+    end
+  end
+
   describe "" do
     describe "Ia" do
       e "Ia", "abc\nbcd", "abc\nbcd"

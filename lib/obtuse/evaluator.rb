@@ -30,6 +30,11 @@ module Obtuse
             when :%
               push x % y
             end
+          elsif String === x && Array === y
+            case atom
+            when :%
+              push x % y
+            end
           else
           end
         when :"#"
