@@ -6,12 +6,24 @@ describe Obtuse do
   end
 
   describe "Integer" do
-    e "2", 2
-    e "100", 100
+    describe "" do
+      e "2", 2
+      e "100", 100
+    end
+
+    describe "#" do
+      e "3#", [0, 1, 2]
+    end
   end
 
   describe "String" do
-    e %q{"a \n b \n c \t\td\na"}, "a \n b \n c \t\td\na"
+    describe "" do
+      e %q{"a \n b \n c \t\td\na"}, "a \n b \n c \t\td\na"
+    end
+
+    describe "#" do
+      e %q{"foo bar"#}, 7
+    end
   end
 
   describe "Integer Integer" do

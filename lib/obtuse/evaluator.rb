@@ -32,6 +32,13 @@ module Obtuse
             end
           else
           end
+        when :"#"
+          x = pop
+          if Integer === x
+            push [*0...x]
+          elsif String === x
+            push x.length
+          end
         when :Ia
           push stdin.read.chomp
         when :Il
