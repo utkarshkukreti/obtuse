@@ -59,6 +59,29 @@ describe Obtuse do
     end
   end
 
+  describe "String Integer" do
+    describe "+" do
+      e %q{"foo: "42+}, "foo: 42"
+    end
+
+    describe "-" do
+    end
+
+    describe "*" do
+      e %q{"foobar "3*}, "foobar foobar foobar "
+    end
+
+    describe "/" do
+    end
+
+    describe "%" do
+      e %q{"%05d" 123%}, "00123"
+    end
+
+    describe "^" do
+    end
+  end
+
   describe "" do
     describe "Ia" do
       e "Ia", "abc\nbcd", "abc\nbcd"

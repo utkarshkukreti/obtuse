@@ -21,6 +21,15 @@ module Obtuse
           if Integer === x && Integer === y ||
             String === x && String === y
             push x.send(atom, y)
+          elsif String === x && Integer === y
+            case atom
+            when :+
+              push x + y.to_s
+            when :*
+              push x * y
+            when :%
+              push x % y
+            end
           else
           end
         when :Ia
