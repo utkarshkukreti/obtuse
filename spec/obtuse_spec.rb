@@ -26,7 +26,7 @@ describe Obtuse do
       end
 
       describe "String Integer" do
-          e %q{"foo: "42+}, "foo: 42"
+        e %q{"foo: "42+}, "foo: 42"
       end
 
       describe "String String" do
