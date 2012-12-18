@@ -65,6 +65,9 @@ module Obtuse
         when :!
           x = pop
           push (x.nil? || x == 0 || x == "" || x == []) ? 1 : 0
+        when :"@"
+          x, y, z = pop 3
+          push y; push z; push x
         when :Ic
           push pop.to_i.chr
         when :Sg

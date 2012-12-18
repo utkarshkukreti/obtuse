@@ -147,6 +147,12 @@ describe Obtuse do
       end
     end
 
+    describe "@" do
+      describe "Object Object Object" do
+        e %q{"abc" 10 4# @}, [10, [0, 1, 2, 3], "abc"], stack: true
+      end
+    end
+
     describe "Ic" do
       describe "Integer" do
         e "97 Ic", "a"
@@ -205,11 +211,11 @@ describe Obtuse do
     end
 
     describe "Ra" do
-      e "Ra", "abc\nbcd", "abc\nbcd"
+      e "Ra", "abc\nbcd", stdin: "abc\nbcd"
     end
 
     describe "Rl" do
-      e "Rl", "abc", "abc\nbcd"
+      e "Rl", "abc", stdin: "abc\nbcd"
     end
   end
 
