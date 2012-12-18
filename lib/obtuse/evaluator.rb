@@ -62,6 +62,9 @@ module Obtuse
           elsif Array === x
             @stack += x
           end
+        when :!
+          x = pop
+          push (x.nil? || x == 0 || x == "" || x == []) ? 1 : 0
         when :Ic
           push pop.to_i.chr
         when :Sg

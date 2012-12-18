@@ -126,6 +126,27 @@ describe Obtuse do
       end
     end
 
+    describe "!" do
+      describe "" do
+        e "!", 1
+      end
+
+      describe "Integer" do
+        e "1!", 0
+        e "0!", 1
+      end
+
+      describe "String" do
+        e %q{""!}, 1
+        e %q{"foo"!}, 0
+      end
+
+      describe "Array" do
+        e "1#!", 0
+        e "0#!", 1
+      end
+    end
+
     describe "Ic" do
       describe "Integer" do
         e "97 Ic", "a"
