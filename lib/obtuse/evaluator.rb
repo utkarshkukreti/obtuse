@@ -18,9 +18,15 @@ module Obtuse
         when :+, :-, :*, :/, :%, :^
           atom = :** if atom == :^
           y, x = pop, pop
-          if Integer === x && Integer === y ||
-            String === x && String === y
+          if Integer === x && Integer === y
             push x.send(atom, y)
+          elsif String === x && String === y
+            case atom
+            when :+
+              push x + y
+            when :-
+              push (x.chars.to_a - y.chars.to_a).join
+            end
           elsif String === x && Integer === y
             case atom
             when :+

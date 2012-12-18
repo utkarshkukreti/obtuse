@@ -82,6 +82,13 @@ describe Obtuse do
       e '"foo" "bar"+', "foobar"
       e '"foo\\"" "bar"+', 'foo"bar'
     end
+
+    describe "-" do
+      e %q{"aaa""a"-}, ""
+      e %q{"cabc""b"-}, "cac"
+      e %q{"cabc""cb"-}, "a"
+      e %q{"cabc""cab"-}, ""
+    end
   end
 
   describe "String Integer" do
