@@ -41,6 +41,13 @@ module Obtuse
             when :%
               push x % y
             end
+          elsif Array === x
+            case atom
+            when :+
+              push x + Array(y)
+            when :-
+              push x - Array(y)
+            end
           else
           end
         when :"#"

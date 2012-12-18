@@ -38,6 +38,13 @@ describe Obtuse do
         e '"foo" "bar"+', "foobar"
         e '"foo\\"" "bar"+', 'foo"bar'
       end
+
+      describe "Array Object" do
+        e %q{[1 2] 1 +}, [1, 2, 1]
+        e %q{[1 2] "1" +}, [1, 2, "1"]
+        e %q{[1] [] +}, [1]
+        e %q{[1 2] [3 4] +}, [1, 2, 3, 4]
+      end
     end
 
     describe "-" do
@@ -52,6 +59,13 @@ describe Obtuse do
         e %q{"cabc""b"-}, "cac"
         e %q{"cabc""cb"-}, "a"
         e %q{"cabc""cab"-}, ""
+      end
+
+      describe "Array Object" do
+        e %q{[1 2] 1 -}, [2]
+        e %q{[1 2] "1" -}, [1, 2]
+        e %q{[1] [] -}, [1]
+        e %q{[1 2 3 3 1 4 4] [3 4] -}, [1, 2, 1]
       end
     end
 
