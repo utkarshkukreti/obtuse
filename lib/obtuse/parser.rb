@@ -21,8 +21,13 @@ module Obtuse
         as(:function) >> spaces?
     end
 
+    rule :lambda do
+      str("{") >> spaces? >> expression.as(:expression).as(:lambda) >>
+      str("}") >> spaces?
+    end
+
     rule :expression do
-      spaces? >> (string | integer | function).repeat >> spaces?
+      spaces? >> (integer | string | function | lambda).repeat >> spaces?
     end
 
     root :expression

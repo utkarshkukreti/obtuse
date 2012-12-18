@@ -110,6 +110,10 @@ describe Obtuse do
         e %q{"%02d %03d %04d"4#%}, "00 001 0002"
         e %q{"%02d %03d %04d"[0 1 2 3 4 5]%}, "00 001 0002"
       end
+
+      describe "Array Lambda (Map)" do
+        e %q{[1 2 3 4] {..} %}, [1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4]
+      end
     end
 
     describe "^" do

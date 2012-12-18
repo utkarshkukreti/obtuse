@@ -11,10 +11,14 @@ module Obtuse
       @transform = Transform.new
     end
 
-    def eval(input)
-      @transform.apply(@parser.parse(input)).each do |atom|
+    def eval(input, parsed = false)
+      if parsed == false
+        input = @transform.apply(@parser.parse(input))
+      end
+
+      input.each do |atom|
         case atom
-        when Integer, String, Array
+        when Integer, String, Array, AST::Lambda
           push atom
         when :+, :-, :*, :/, :%, :^
           atom = :** if atom == :^
@@ -56,6 +60,17 @@ module Obtuse
               elsif Array === y
                 first = x.shift
                 push x.reduce([first]) {|fold, el| fold + y + [el] }
+              end
+            when :%
+              if AST::Lambda === y
+                stash
+                x.each do |el|
+                  push el
+                  eval y.expression, true
+                end
+                stack = @stack
+                unstash
+                push stack
               end
             end
           else
