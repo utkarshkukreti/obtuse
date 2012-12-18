@@ -1,10 +1,11 @@
 module Obtuse
   class Evaluator
     attr_accessor :stdin
-    attr_reader :stack
+    attr_reader :stack, :stash
 
     def initialize
       @stack     = []
+      @stash     = []
       @stdin     = $stdin
       @parser    = Parser.new
       @transform = Transform.new
@@ -91,6 +92,12 @@ module Obtuse
           push x if x
         when :";"
           pop
+        when :"["
+          stash
+        when :"]"
+          stack = @stack
+          unstash
+          push stack
         when :Ic
           push pop.to_i.chr
         when :Sg
@@ -132,6 +139,15 @@ module Obtuse
 
     def peek
       @stack.last
+    end
+
+    def stash
+      @stash << @stack
+      @stack = []
+    end
+
+    def unstash
+      @stack = @stash.pop
     end
   end
 end

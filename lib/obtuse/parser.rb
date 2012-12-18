@@ -15,19 +15,14 @@ module Obtuse
       str('"') >> spaces?
     end
 
-    rule :array do
-      str("[") >> spaces? >> (integer | string).repeat.as(:array) >> spaces? >>
-      str("]") >> spaces?
-    end
-
     rule :function do
-      %w{+ - * / % ^ # $ ~ ! @ . ; Ic Sg Sl Su Sc So Si St Ra Rl}.
+      %w{+ - * / % ^ # $ ~ ! @ . ; [ ] Ic Sg Sl Su Sc So Si St Ra Rl}.
         map { |name| str name }.reduce(:|).
         as(:function) >> spaces?
     end
 
     rule :expression do
-      spaces? >> (array | string | integer | function).repeat >> spaces?
+      spaces? >> (string | integer | function).repeat >> spaces?
     end
 
     root :expression

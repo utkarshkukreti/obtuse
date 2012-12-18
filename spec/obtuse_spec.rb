@@ -15,10 +15,6 @@ describe Obtuse do
     describe "String" do
       e %q{"a \n b \n c \t\td\na"}, "a \n b \n c \t\td\na"
     end
-
-    describe "Array" do
-      e %q{["a" 4 -9]}, ["a", 4, -9]
-    end
   end
 
   describe "Functions" do
@@ -205,6 +201,10 @@ describe Obtuse do
         e %q{2;}, [], stack: true
         e %q{;}, [], stack: true
       end
+    end
+
+    describe "[]" do
+      e %q{[1 . 2 . + . [1 . .]]}, [1, 1, 4, 4, [1, 1, 1]]
     end
 
     describe "Ic" do
