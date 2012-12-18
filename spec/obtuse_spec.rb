@@ -85,6 +85,11 @@ describe Obtuse do
         e %q{[1 2 3] [1] *}, [1, 1, 2, 1, 3]
         e %q{[1 2 3] [0 1] *}, [1, 0, 1, 2, 0, 1, 3]
       end
+
+      describe "Array Lambda (Fold)" do
+        e %q{[1 2 3] {+} *}, 6
+        e %q{[1 2 3] {-} *}, -4
+      end
     end
 
     describe "/" do

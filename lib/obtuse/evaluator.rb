@@ -60,6 +60,12 @@ module Obtuse
               elsif Array === y
                 first = x.shift
                 push x.reduce([first]) {|fold, el| fold + y + [el] }
+              elsif AST::Lambda === y
+                push x.shift
+                x.each do |el|
+                  push el
+                  eval y.expression, true
+                end
               end
             when :%
               if AST::Lambda === y
