@@ -115,11 +115,12 @@ module Obtuse
           end
         when :~
           x = pop
-          if String === x
+          case x
+          when String
             eval x
-          elsif Array === x
+          when Array
             @stack += x
-          elsif AST::Lambda === x
+          when AST::Lambda
             eval x.expression, true
           end
         when :!
