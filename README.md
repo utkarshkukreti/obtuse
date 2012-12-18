@@ -1,6 +1,5 @@
 # Obtuse [![Build Status](https://travis-ci.org/utkarshkukreti/obtuse.png)](https://travis-ci.org/utkarshkukreti/obtuse)
 
-
 Obtuse is a stack-oriented programming language, optimized for brevity.
 
 ## Installation
