@@ -20,13 +20,6 @@ module Obtuse
           x, y = pop 2
           if Integer === x && Integer === y
             push x.send(atom, y)
-          elsif String === x && String === y
-            case atom
-            when :+
-              push x + y
-            when :-
-              push (x.chars.to_a - y.chars.to_a).join
-            end
           elsif String === x && Integer === y
             case atom
             when :+
@@ -35,6 +28,15 @@ module Obtuse
               push x * y
             when :%
               push x % y
+            end
+          elsif String === x && String === y
+            case atom
+            when :+
+              push x + y
+            when :-
+              push (x.chars.to_a - y.chars.to_a).join
+            when :*
+              push x.chars.to_a.join(y)
             end
           elsif String === x && Array === y
             case atom
@@ -47,6 +49,13 @@ module Obtuse
               push x + Array(y)
             when :-
               push x - Array(y)
+            when :*
+              if Integer === y
+                push x * y
+              elsif Array === y
+                first = x.shift
+                push x.reduce([first]) {|fold, el| fold + y + [el] }
+              end
             end
           else
           end
