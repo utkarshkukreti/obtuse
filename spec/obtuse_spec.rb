@@ -154,6 +154,15 @@ describe Obtuse do
       end
     end
 
+    describe "Si" do
+      describe "(Integer | String) (Integer | String)" do
+        e %q{123 11 Si}, 0
+        e %q{123 "11" Si}, 0
+        e %q{"foo bar" "o b" Si}, 1
+        e %q{"444" 4 Si}, 1
+      end
+    end
+
     describe "Ra" do
       e "Ra", "abc\nbcd", "abc\nbcd"
     end

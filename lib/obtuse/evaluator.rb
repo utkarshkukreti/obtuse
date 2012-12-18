@@ -72,6 +72,9 @@ module Obtuse
           push pop.to_s.capitalize
         when :So
           push pop.to_s.ord
+        when :Si
+          y, x = pop, pop
+          push x.to_s.include?(y.to_s) ? 1 : 0
         when :Ra
           push stdin.read.chomp
         when :Rl
