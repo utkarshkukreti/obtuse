@@ -55,6 +55,13 @@ module Obtuse
           if String === x
             push x.chars.sort.join
           end
+        when :~
+          x = pop
+          if String === x
+            eval x
+          elsif Array === x
+            @stack += x
+          end
         when :Ic
           push pop.to_i.chr
         when :Sg

@@ -115,6 +115,17 @@ describe Obtuse do
       end
     end
 
+    describe "~" do
+      describe "String" do
+        e %q{"123"~}, 123
+        e %q{"1 2 3 + -"~}, -4
+      end
+
+      describe "Array" do
+        e %q{4#~+++}, 6
+      end
+    end
+
     describe "Ic" do
       describe "Integer" do
         e "97 Ic", "a"
