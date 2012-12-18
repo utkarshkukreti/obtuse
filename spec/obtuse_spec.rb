@@ -142,12 +142,12 @@ describe Obtuse do
       end
     end
 
-    describe "Ia" do
-      e "Ia", "abc\nbcd", "abc\nbcd"
+    describe "Ra" do
+      e "Ra", "abc\nbcd", "abc\nbcd"
     end
 
-    describe "Il" do
-      e "Il", "abc", "abc\nbcd"
+    describe "Rl" do
+      e "Rl", "abc", "abc\nbcd"
     end
   end
 

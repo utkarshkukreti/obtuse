@@ -68,9 +68,9 @@ module Obtuse
           push pop.to_s.upcase
         when :Sc
           push pop.to_s.capitalize
-        when :Ia
+        when :Ra
           push stdin.read.chomp
-        when :Il
+        when :Rl
           push stdin.gets.chomp
         end
       end
