@@ -115,6 +115,12 @@ describe Obtuse do
       end
     end
 
+    describe "Ic" do
+      describe "Integer" do
+        e "97 Ic", "a"
+      end
+    end
+
     describe "Sg" do
       describe "(Integer | String) (Integer | String) (Integer | String)" do
         e %q{123 1 2 Sg}, "223"
@@ -139,6 +145,12 @@ describe Obtuse do
     describe "Sc" do
       describe "String" do
         e %q{"foo bar!" Sc}, "Foo bar!"
+      end
+    end
+
+    describe "So" do
+      describe "String" do
+        e %q{"a" So}, 97
       end
     end
 

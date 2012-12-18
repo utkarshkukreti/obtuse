@@ -55,6 +55,8 @@ module Obtuse
           if String === x
             push x.chars.sort.join
           end
+        when :Ic
+          push pop.to_i.chr
         when :Sg
           z, y, x = pop, pop, pop
           if (Integer === x || String === x) &&
@@ -68,6 +70,8 @@ module Obtuse
           push pop.to_s.upcase
         when :Sc
           push pop.to_s.capitalize
+        when :So
+          push pop.to_s.ord
         when :Ra
           push stdin.read.chomp
         when :Rl
