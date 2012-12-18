@@ -55,6 +55,13 @@ module Obtuse
           if String === x
             push x.chars.sort.join
           end
+        when :Sg
+          z, y, x = pop, pop, pop
+          if (Integer === x || String === x) &&
+             (Integer === y || String === y) &&
+             (Integer === z || String === z)
+            push x.to_s.gsub(y.to_s, z.to_s)
+          end
         when :Ia
           push stdin.read.chomp
         when :Il
