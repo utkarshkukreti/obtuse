@@ -4,9 +4,10 @@ module Obtuse
     rule(:spaces?) { spaces.maybe           }
     rule(:digit)   { match["0-9"]           }
     rule(:digits)  { match["0-9"].repeat(1) }
+    rule(:minus)   { str("-")               }
 
     rule :integer do
-      digits.as(:integer) >> spaces?
+      (minus.maybe >> digits).as(:integer) >> spaces?
     end
 
     rule :string do
