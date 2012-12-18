@@ -130,6 +130,12 @@ describe Obtuse do
     end
 
     describe "$" do
+      describe "Integer" do
+        e %q{5 $}, [], stack: true
+        e %q{1 0 $}, [1, 1], stack: true
+        e %q{5#~ 3 $}, [0, 1, 2, 3, 4, 1], stack: true
+      end
+
       describe "String" do
         e %q{"abcdcba"$}, "aabbccd"
       end

@@ -59,7 +59,9 @@ module Obtuse
           end
         when :"$"
           x = pop
-          if String === x
+          if Integer === x
+            push @stack[-x - 1] if @stack[-x - 1]
+          elsif String === x
             push x.chars.sort.join
           end
         when :~
