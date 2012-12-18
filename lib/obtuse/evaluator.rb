@@ -94,6 +94,24 @@ module Obtuse
             push @stack[-x - 1] if @stack[-x - 1]
           elsif String === x
             push x.chars.sort.join
+          elsif Array === x
+            push x.sort
+          elsif AST::Lambda === x
+            y = x
+            x = pop
+            case x
+            when String, Array
+              stash
+              array = String === x ? x.chars.to_a : x
+              array.sort_by! do |el|
+                @stack = []
+                push el
+                eval y.expression, true
+                @stack
+              end
+              unstash
+              push String === x ? array.join : array
+            end
           end
         when :~
           x = pop

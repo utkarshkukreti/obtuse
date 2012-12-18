@@ -154,6 +154,15 @@ describe Obtuse do
       describe "String" do
         e %q{"abcdcba"$}, "aabbccd"
       end
+
+      describe "Array" do
+        e %q{[1 4 3] $}, [1, 3, 4]
+      end
+
+      describe "(String | Array) Lambda (Sort by)" do
+        e %q{"abca" {.} $}, "aabc"
+        e %q{[1 4 3] {-1 *} $}, [4, 3, 1]
+      end
     end
 
     describe "~" do
