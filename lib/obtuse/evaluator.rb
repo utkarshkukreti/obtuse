@@ -47,7 +47,7 @@ module Obtuse
           x = pop
           if Integer === x
             push [*0...x]
-          elsif String === x
+          elsif String === x || Array === x
             push x.length
           end
         when :"$"

@@ -120,6 +120,12 @@ describe Obtuse do
     end
   end
 
+  describe "Array" do
+    describe "#" do
+      e "10##", 10
+    end
+  end
+
   describe "" do
     describe "Ia" do
       e "Ia", "abc\nbcd", "abc\nbcd"
