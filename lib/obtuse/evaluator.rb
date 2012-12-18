@@ -17,7 +17,7 @@ module Obtuse
           push atom
         when :+, :-, :*, :/, :%, :^
           atom = :** if atom == :^
-          y, x = pop, pop
+          x, y = pop 2
           if Integer === x && Integer === y
             push x.send(atom, y)
           elsif String === x && String === y
@@ -58,7 +58,7 @@ module Obtuse
         when :Ic
           push pop.to_i.chr
         when :Sg
-          z, y, x = pop, pop, pop
+          x, y, z = pop 3
           if (Integer === x || String === x) &&
              (Integer === y || String === y) &&
              (Integer === z || String === z)
@@ -73,10 +73,10 @@ module Obtuse
         when :So
           push pop.to_s.ord
         when :Si
-          y, x = pop, pop
+          x, y = pop 2
           push x.to_s.include?(y.to_s) ? 1 : 0
         when :St
-          z, y, x = pop, pop, pop
+          x, y, z = pop 3
           push x.to_s.tr(y.to_s, z.to_s)
         when :Ra
           push stdin.read.chomp
@@ -90,8 +90,8 @@ module Obtuse
       @stack << object
     end
 
-    def pop
-      @stack.pop
+    def pop(n = nil)
+      n ? @stack.pop(n) : @stack.pop
     end
 
     def peek
