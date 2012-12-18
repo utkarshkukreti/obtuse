@@ -163,6 +163,15 @@ describe Obtuse do
       end
     end
 
+    describe "St" do
+      describe "(Integer | String) (Integer | String) (Integer | String)" do
+        e %q{123 13 98 St}, "928"
+        e %q{"123" "13" 98 St}, "928"
+        e %q{"hello" "a-y" "b-z" St}, "ifmmp"
+        e %q{"hello" "^aeiou" 0 St}, "0e00o"
+      end
+    end
+
     describe "Ra" do
       e "Ra", "abc\nbcd", "abc\nbcd"
     end

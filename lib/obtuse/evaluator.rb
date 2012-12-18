@@ -75,6 +75,9 @@ module Obtuse
         when :Si
           y, x = pop, pop
           push x.to_s.include?(y.to_s) ? 1 : 0
+        when :St
+          z, y, x = pop, pop, pop
+          push x.to_s.tr(y.to_s, z.to_s)
         when :Ra
           push stdin.read.chomp
         when :Rl
