@@ -18,7 +18,7 @@ module Obtuse
       x.chars.to_a.each do |el|
         push el
         eval y.expression, true
-        array += @stack.slice!(mark..-1)
+        array += @stack.slice!(mark..-1) || []
       end
       push array
     end
@@ -29,7 +29,7 @@ module Obtuse
       x.each do |el|
         push el
         eval y.expression, true
-        array += @stack.slice!(mark..-1)
+        array += @stack.slice!(mark..-1) || []
       end
       push array
     end
