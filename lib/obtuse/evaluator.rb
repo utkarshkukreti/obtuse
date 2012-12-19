@@ -1,11 +1,11 @@
 module Obtuse
   class Evaluator
     attr_accessor :stdin
-    attr_reader :stack, :stash
+    attr_reader :stack, :marks
 
     def initialize
       @stack     = []
-      @stash     = []
+      @marks     = []
       @stdin     = $stdin
       @parser    = Parser.new
       @transform = Transform.new
@@ -71,14 +71,15 @@ module Obtuse
               end
             when :%
               if AST::Lambda === y
-                stash
+                stack = @stack
+                @stack = []
                 x.each do |el|
                   push el
                   eval y.expression, true
                 end
-                stack = @stack
-                unstash
-                push stack
+                array = @stack
+                @stack = stack
+                push array
               end
             end
           else
@@ -103,7 +104,8 @@ module Obtuse
             x = pop
             case x
             when String, Array
-              stash
+              stack = @stack
+              @stack = []
               array = String === x ? x.chars.to_a : x
               array.sort_by! do |el|
                 @stack = []
@@ -111,7 +113,7 @@ module Obtuse
                 eval y.expression, true
                 @stack
               end
-              unstash
+              @stack = stack
               push String === x ? array.join : array
             end
           end
@@ -136,11 +138,11 @@ module Obtuse
         when :";"
           pop
         when :"["
-          stash
+          @marks << @stack.size
         when :"]"
-          stack = @stack
-          unstash
-          push stack
+          mark = @marks.pop
+          array = @stack.slice!(mark..-1)
+          push array if array
         when :"=", :<, :>
           atom = :== if atom == :"="
           x, y = pop 2
@@ -218,15 +220,6 @@ module Obtuse
 
     def peek
       @stack.last
-    end
-
-    def stash
-      @stash << @stack
-      @stack = []
-    end
-
-    def unstash
-      @stack = @stash.pop
     end
 
     def truthy?(x)

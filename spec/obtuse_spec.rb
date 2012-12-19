@@ -232,6 +232,7 @@ describe Obtuse do
 
     describe "[]" do
       e %q{[1 . 2 . + . [1 . .]]}, [1, 1, 4, 4, [1, 1, 1]]
+      e "1[..]", [1, [1, 1]], stack: true
     end
 
     describe "=" do
