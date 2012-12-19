@@ -13,26 +13,24 @@ module Obtuse
     end
 
     fn :%, String, AST::Lambda do |x, y|
-      stack = @stack
-      @stack = []
+      array = []
+      mark = @stack.size
       x.chars.to_a.each do |el|
         push el
         eval y.expression, true
+        array += @stack.slice!(mark..-1)
       end
-      array = @stack
-      @stack = stack
       push array
     end
 
     fn :%, Array, AST::Lambda do |x, y|
-      stack = @stack
-      @stack = []
+      array = []
+      mark = @stack.size
       x.each do |el|
         push el
         eval y.expression, true
+        array += @stack.slice!(mark..-1)
       end
-      array = @stack
-      @stack = stack
       push array
     end
   end

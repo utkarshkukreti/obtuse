@@ -123,10 +123,12 @@ describe Obtuse do
 
       describe "String Lambda (Map)" do
         e %q{"1 2 3 4" {So} %}, [49, 32, 50, 32, 51, 32, 52]
+        e %q{"123" . {1$\;} %}, ["123", "123", "123"]
       end
 
       describe "Array Lambda (Map)" do
         e %q{[1 2 3 4] {..} %}, [1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4]
+        e %q{[1 2 3] . {1$\;} %}, [[1, 2, 3], [1, 2, 3], [1, 2, 3]]
       end
     end
 
