@@ -169,6 +169,16 @@ module Obtuse
         when :"\\"
           x, y = pop 2
           push y; push x;
+        when :|
+          x, y = pop 2
+          if Integer === x && Integer === y
+            push x | y
+          end
+        when :&
+          x, y = pop 2
+          if Integer === x && Integer === y
+            push x & y
+          end
         when :I
           x, y, z = pop 3
           if AST::Lambda === x

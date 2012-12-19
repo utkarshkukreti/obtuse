@@ -267,6 +267,26 @@ describe Obtuse do
       end
     end
 
+    describe "|" do
+      describe "Integer Integer" do
+        e "0 0 |", 0
+        e "1 0 |", 1
+        e "1 0 |", 1
+        e "1 1 |", 1
+        e "69 3 |", 71
+      end
+    end
+
+    describe "&" do
+      describe "Integer Integer" do
+        e "0 0 &", 0
+        e "1 0 &", 0
+        e "1 0 &", 0
+        e "1 1 &", 1
+        e "69 4 &", 4
+      end
+    end
+
     describe "I" do
       describe "Object Object Object" do
         e '0 1 2 I', 2
