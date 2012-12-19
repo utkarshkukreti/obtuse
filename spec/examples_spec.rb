@@ -32,5 +32,10 @@ describe Obtuse do
     describe "Problem #20: Sum of digits in 100!" do
       e '100#{1+}%{*}*Ts{Ti}%{+}*', 648
     end
+
+    describe "Problem #25: First term of Fibonacci Sequence to contain" +
+      " more than 1000 digits" do
+      e '[1 1{.Ts#1000<}{.@.@+@\}W]#', 4782
+    end
   end
 end
