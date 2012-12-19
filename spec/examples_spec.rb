@@ -10,6 +10,10 @@ describe Obtuse do
     e '13483 74205 .@.@{.}{.@\%}W;\@*\/', 13483.lcm(74205)
   end
 
+  describe "Hailstone Sequence (Collatz Conjecture)" do
+    e '13[.{.1>}{{.2%}{.3*1+}{.2/}I}W]', [13, 40, 20, 10, 5, 16, 8, 4, 2, 1]
+  end
+
   describe "Project Euler" do
     describe "Problem #6: Find the difference between the sum of the squares" +
       " of the first one hundred natural numbers and the square of the sum." do
