@@ -34,7 +34,7 @@ describe Obtuse do
     end
 
     describe "Problem #25: First term of Fibonacci Sequence to contain" +
-      " more than 1000 digits" do
+      " more than 1000 digits", slow: true do
       e '[1 1{.Ts#1000<}{.@.@+@\}W]#', 4782
     end
 
@@ -57,8 +57,13 @@ What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed\
     end
 
     describe "Problem #29: Number of distinct terms in a ^ b for a, b in" +
-      " 2..100" do
+      " 2..100", slow: true do
       e '99#{2+}%.{1${1$^}%\;}%{~}%.&#', 9183
+    end
+
+    describe "Problem #30: Find the sum of all the numbers that can be" +
+      " written as the sum of fifth powers of their digits.", slow: true do
+      e '200000#{{..Ts{Ti5^}%{+}*=}{}{;}I}%{+}*1-', 443839
     end
   end
 end
