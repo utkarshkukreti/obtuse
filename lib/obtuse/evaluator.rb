@@ -48,6 +48,19 @@ module Obtuse
             when :%
               push x % y
             end
+          elsif String === x && AST::Lambda === y
+            case atom
+            when :%
+              stack = @stack
+              @stack = []
+              x.chars.to_a.each do |el|
+                push el
+                eval y.expression, true
+              end
+              array = @stack
+              @stack = stack
+              push array
+            end
           elsif Array === x
             case atom
             when :+
