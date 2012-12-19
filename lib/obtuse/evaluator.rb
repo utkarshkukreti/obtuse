@@ -142,6 +142,14 @@ module Obtuse
           stack = @stack
           unstash
           push stack
+        when :"=", :<, :>
+          atom = :== if atom == :"="
+          x, y = pop 2
+          if Integer === x && Integer === y ||
+              String === x && String === y ||
+               Array === x && Array === y
+            push x.send(atom, y) ? 1 : 0
+          end
         when :Ic
           push pop.to_i.chr
         when :Sg
