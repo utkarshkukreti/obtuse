@@ -126,8 +126,7 @@ module Obtuse
             eval x.expression, true
           end
         when :!
-          x = pop
-          push (x.nil? || x == 0 || x == "" || x == []) ? 1 : 0
+          push falsy?(pop) ? 1 : 0
         when :"@"
           x, y, z = pop 3
           push y; push z; push x
@@ -149,6 +148,15 @@ module Obtuse
               String === x && String === y ||
                Array === x && Array === y
             push x.send(atom, y) ? 1 : 0
+          end
+        when :W
+          x, y = pop 2
+          if AST::Lambda === x && AST::Lambda === y
+            loop do
+              eval x.expression, true
+              break if falsy?(pop)
+              eval y.expression, true
+            end
           end
         when :Ic
           push pop.to_i.chr
@@ -200,6 +208,10 @@ module Obtuse
 
     def unstash
       @stack = @stash.pop
+    end
+
+    def falsy?(x)
+      x.nil? || x == 0 || x == "" || x == []
     end
   end
 end
