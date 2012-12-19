@@ -23,5 +23,9 @@ describe Obtuse do
     describe "Problem #16: Sum of digits of 2 ^ 1000" do
       e '2 1000^Ts{Ti}%{+}*', 1366
     end
+
+    describe "Problem #20: Sum of digits in 100!" do
+      e '100#{1+}%{*}*Ts{Ti}%{+}*', 648
+    end
   end
 end
