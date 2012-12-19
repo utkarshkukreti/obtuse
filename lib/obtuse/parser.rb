@@ -11,8 +11,8 @@ module Obtuse
     end
 
     rule :string do
-      str('"') >> (str('"').absent? >> (str('\\"') | any)).repeat.as(:string) >>
-      str('"') >> spaces?
+      str('"') >> ((str('"').absent? >> (str('\\"') | any)).repeat(1)).maybe.
+        as(:string) >> str('"') >> spaces?
     end
 
     rule :function do

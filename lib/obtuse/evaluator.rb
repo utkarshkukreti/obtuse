@@ -6,9 +6,310 @@ module Obtuse
     def initialize
       @stack     = []
       @marks     = []
+      @functions = Hash.new {|h, k| h[k] = [] }
       @stdin     = $stdin
       @parser    = Parser.new
       @transform = Transform.new
+
+
+      fn "[" do
+        @marks << @stack.size
+      end
+
+      fn "]" do
+        mark = @marks.pop
+        array = @stack.slice!(mark..-1)
+        push array if array
+      end
+
+      fn ".", Object do |x|
+        if x
+          push x; push x;
+        end
+      end
+
+      fn :+, Integer, Integer do |x, y|
+        push x + y
+      end
+
+      fn :+, String, Integer do |x, y|
+        push x + y.to_s
+      end
+
+      fn :+, String, String do |x, y|
+        push x + y
+      end
+
+      fn :+, Array, Object do |x, y|
+        push x + Array(y)
+      end
+
+      fn :-, Integer, Integer do |x, y|
+        push x - y
+      end
+
+      fn :-, String, String do |x, y|
+        push (x.chars.to_a - y.chars.to_a).join
+      end
+
+      fn :-, Array, Object do |x, y|
+        push x - Array(y)
+      end
+
+      fn :*, Integer, Integer do |x, y|
+        push x * y
+      end
+
+      fn :*, String, Integer do |x, y|
+        push x * y
+      end
+
+      fn :*, String, String do |x, y|
+        push x.chars.to_a.join(y)
+      end
+
+      fn :*, Array, Integer do |x, y|
+        push x * y
+      end
+
+      fn :*, Array, String do |x, y|
+        push x.join(y)
+      end
+
+      fn :*, Array, Array do |x, y|
+        first = x.shift
+        push x.reduce([first]) {|fold, el| fold + y + [el]}
+      end
+
+      fn :*, Array, AST::Lambda do |x, y|
+        push x.shift
+        x.each do |el|
+          push el
+          eval y.expression, true
+        end
+      end
+
+      fn :/, Integer, Integer do |x, y|
+        push x / y
+      end
+
+      fn :%, Integer, Integer do |x, y|
+        push x % y
+      end
+
+      fn :%, String, Integer do |x, y|
+        push x % y
+      end
+
+      fn :%, String, Array do |x, y|
+        push x % y
+      end
+
+      fn :%, String, AST::Lambda do |x, y|
+        stack = @stack
+        @stack = []
+        x.chars.to_a.each do |el|
+          push el
+          eval y.expression, true
+        end
+        array = @stack
+        @stack = stack
+        push array
+      end
+
+      fn :%, Array, AST::Lambda do |x, y|
+        stack = @stack
+        @stack = []
+        x.each do |el|
+          push el
+          eval y.expression, true
+        end
+        array = @stack
+        @stack = stack
+        push array
+      end
+
+      fn :^, Integer, Integer do |x, y|
+        push x ** y
+      end
+
+      fn "#", Integer do |x|
+        p x
+        push [*0...x]
+      end
+
+      fn "#", String do |x|
+        push x.length
+      end
+
+      fn "#", Array do |x|
+        push x.size
+      end
+
+      fn "$", Integer do |x|
+        push @stack[-x - 1] if @stack[-x - 1]
+      end
+
+      fn "$", String do |x|
+        push x.chars.sort.join
+      end
+
+      fn "$", Array do |x|
+        push x.sort
+      end
+
+      fn "$", String, AST::Lambda do |x, y|
+        stack = @stack
+        @stack = []
+        array = x.chars.to_a
+        array.sort_by! do |el|
+          @stack = []
+          push el
+          eval y.expression, true
+          @stack
+        end
+        @stack = stack
+        push array.join
+      end
+
+      fn "$", Array, AST::Lambda do |x, y|
+        stack = @stack
+        @stack = []
+        array = x
+        array.sort_by! do |el|
+          @stack = []
+          push el
+          eval y.expression, true
+          @stack
+        end
+        @stack = stack
+        push array
+      end
+
+      fn :~, String do |x|
+        eval x
+      end
+
+      fn :~, Array do |x|
+        @stack += x
+      end
+
+      fn :~, AST::Lambda do |x|
+        eval x.expression, true
+      end
+
+      fn :!, Object do |x|
+        push truthy?(x) ? 0 : 1
+      end
+
+      fn "@", Object, Object, Object do |x, y, z|
+        push y; push z; push x
+      end
+
+      fn ";", Object do |x|
+      end
+
+      [Integer, String, Object].each do |type|
+        %w{= < >}.each do |op|
+          fn op, type, type do |x, y|
+            op = "==" if op == "="
+            push x.send(op, y) ? 1 : 0
+          end
+        end
+      end
+
+      fn "\\", Object, Object do |x, y|
+        push y; push x
+      end
+
+      fn :|, Integer, Integer do |x, y|
+        push x | y
+      end
+
+      fn :&, Integer, Integer do |x, y|
+        push x & y
+      end
+
+      fn :I, Object, Object, Object do |x, y, z|
+        if AST::Lambda === x
+          eval x.expression, true
+          if truthy?(pop)
+            AST::Lambda === y ? eval(y.expression, true) : push(y)
+          else
+            AST::Lambda === z ? eval(z.expression, true) : push(z)
+          end
+        else
+          if truthy?(x)
+            AST::Lambda === y ? eval(y.expression, true) : push(y)
+          else
+            AST::Lambda === z ? eval(z.expression, true) : push(z)
+          end
+        end
+      end
+
+      fn :W, Object, Object do |x, y|
+        if AST::Lambda === x && AST::Lambda === y
+          loop do
+            eval x.expression, true
+            break unless truthy?(pop)
+            eval y.expression, true
+          end
+        end
+      end
+
+      fn :Ic, Integer do |x|
+        push x.chr
+      end
+
+      # This could be done in a better way.
+      fn :Sg, Object, Object, Object do |x, y, z|
+        push x.to_s.gsub(y.to_s, z.to_s)
+      end
+
+      fn :Sl, String do |x|
+        push x.downcase
+      end
+
+      fn :Su, String do |x|
+        push x.upcase
+      end
+
+      fn :Sc, String do |x|
+        push x.capitalize
+      end
+
+      fn :So, String do |x|
+        push x.ord
+      end
+
+      fn :Si, Object, Object do |x, y|
+        push x.to_s.include?(y.to_s) ? 1 : 0
+      end
+
+      # This could also be done in a better way.
+      fn :St, Object, Object, Object do |x, y, z|
+        push x.to_s.tr(y.to_s, z.to_s)
+      end
+
+      fn :Ra do
+        push stdin.read.chomp
+      end
+
+      fn :Rl do
+        push stdin.gets.chomp
+      end
+
+      fn :Ti, Object do |x|
+        push x.to_i
+      end
+
+      fn :Ts, Object do |x|
+        push x.to_s
+      end
+    end
+
+    def fn(name, *types, &block)
+      @functions[name.to_s] << { types: types, block: block }
     end
 
     def eval(input, parsed = false)
@@ -19,222 +320,24 @@ module Obtuse
       return if input.nil?
 
       input.each do |atom|
-        case atom
-        when Integer, String, Array, AST::Lambda
+        if Symbol === atom
+          fn = @functions[atom.to_s].find do |fn|
+            types = fn[:types]
+            @stack.last(types.size).zip(types).all? do |x, y|
+              y === x
+            end
+          end
+
+          if fn
+            fn[:block].call *pop(fn[:types].size)
+          else
+            raise ArgumentError.new "Function `#{atom}` does not match" +
+              " preceding" +
+              " arguments.\nLast #{[7, @stack.size].min} elements of the" +
+              " stack have classes: " + @stack.last(7).map(&:class).inspect
+          end
+        else
           push atom
-        when :+, :-, :*, :/, :%, :^
-          atom = :** if atom == :^
-          x, y = pop 2
-          if Integer === x && Integer === y
-            push x.send(atom, y)
-          elsif String === x && Integer === y
-            case atom
-            when :+
-              push x + y.to_s
-            when :*
-              push x * y
-            when :%
-              push x % y
-            end
-          elsif String === x && String === y
-            case atom
-            when :+
-              push x + y
-            when :-
-              push (x.chars.to_a - y.chars.to_a).join
-            when :*
-              push x.chars.to_a.join(y)
-            end
-          elsif String === x && Array === y
-            case atom
-            when :%
-              push x % y
-            end
-          elsif String === x && AST::Lambda === y
-            case atom
-            when :%
-              stack = @stack
-              @stack = []
-              x.chars.to_a.each do |el|
-                push el
-                eval y.expression, true
-              end
-              array = @stack
-              @stack = stack
-              push array
-            end
-          elsif Array === x
-            case atom
-            when :+
-              push x + Array(y)
-            when :-
-              push x - Array(y)
-            when :*
-              if Integer === y
-                push x * y
-              elsif String === y
-                push x.join(y)
-              elsif Array === y
-                first = x.shift
-                push x.reduce([first]) {|fold, el| fold + y + [el] }
-              elsif AST::Lambda === y
-                push x.shift
-                x.each do |el|
-                  push el
-                  eval y.expression, true
-                end
-              end
-            when :%
-              if AST::Lambda === y
-                stack = @stack
-                @stack = []
-                x.each do |el|
-                  push el
-                  eval y.expression, true
-                end
-                array = @stack
-                @stack = stack
-                push array
-              end
-            end
-          else
-          end
-        when :"#"
-          x = pop
-          if Integer === x
-            push [*0...x]
-          elsif String === x || Array === x
-            push x.length
-          end
-        when :"$"
-          x = pop
-          if Integer === x
-            push @stack[-x - 1] if @stack[-x - 1]
-          elsif String === x
-            push x.chars.sort.join
-          elsif Array === x
-            push x.sort
-          elsif AST::Lambda === x
-            y = x
-            x = pop
-            case x
-            when String, Array
-              stack = @stack
-              @stack = []
-              array = String === x ? x.chars.to_a : x
-              array.sort_by! do |el|
-                @stack = []
-                push el
-                eval y.expression, true
-                @stack
-              end
-              @stack = stack
-              push String === x ? array.join : array
-            end
-          end
-        when :~
-          x = pop
-          case x
-          when String
-            eval x
-          when Array
-            @stack += x
-          when AST::Lambda
-            eval x.expression, true
-          end
-        when :!
-          push truthy?(pop) ? 0 : 1
-        when :"@"
-          x, y, z = pop 3
-          push y; push z; push x
-        when :"."
-          x = peek
-          push x if x
-        when :";"
-          pop
-        when :"["
-          @marks << @stack.size
-        when :"]"
-          mark = @marks.pop
-          array = @stack.slice!(mark..-1)
-          push array if array
-        when :"=", :<, :>
-          atom = :== if atom == :"="
-          x, y = pop 2
-          if Integer === x && Integer === y ||
-              String === x && String === y ||
-               Array === x && Array === y
-            push x.send(atom, y) ? 1 : 0
-          end
-        when :"\\"
-          x, y = pop 2
-          push y; push x;
-        when :|
-          x, y = pop 2
-          if Integer === x && Integer === y
-            push x | y
-          end
-        when :&
-          x, y = pop 2
-          if Integer === x && Integer === y
-            push x & y
-          end
-        when :I
-          x, y, z = pop 3
-          if AST::Lambda === x
-            eval x.expression, true
-            if truthy?(pop)
-              AST::Lambda === y ? eval(y.expression, true) : push(y)
-            else
-              AST::Lambda === z ? eval(z.expression, true) : push(z)
-            end
-          else
-            if truthy?(x)
-              AST::Lambda === y ? eval(y.expression, true) : push(y)
-            else
-              AST::Lambda === z ? eval(z.expression, true) : push(z)
-            end
-          end
-        when :W
-          x, y = pop 2
-          if AST::Lambda === x && AST::Lambda === y
-            loop do
-              eval x.expression, true
-              break unless truthy?(pop)
-              eval y.expression, true
-            end
-          end
-        when :Ic
-          push pop.to_i.chr
-        when :Sg
-          x, y, z = pop 3
-          if (Integer === x || String === x) &&
-             (Integer === y || String === y) &&
-             (Integer === z || String === z)
-            push x.to_s.gsub(y.to_s, z.to_s)
-          end
-        when :Sl
-          push pop.to_s.downcase
-        when :Su
-          push pop.to_s.upcase
-        when :Sc
-          push pop.to_s.capitalize
-        when :So
-          push pop.to_s.ord
-        when :Si
-          x, y = pop 2
-          push x.to_s.include?(y.to_s) ? 1 : 0
-        when :Ti
-          push pop.to_i
-        when :Ts
-          push pop.to_s
-        when :St
-          x, y, z = pop 3
-          push x.to_s.tr(y.to_s, z.to_s)
-        when :Ra
-          push stdin.read.chomp
-        when :Rl
-          push stdin.gets.chomp
         end
       end
     end
