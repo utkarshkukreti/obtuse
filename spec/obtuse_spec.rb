@@ -363,6 +363,13 @@ describe Obtuse do
       end
     end
 
+    describe "Sr" do
+      describe "String" do
+        e %q{"foo " Sr}, " oof"
+        e %q{"foo bar" Sr}, "rab oof"""
+      end
+    end
+
     describe "Ra" do
       e "Ra", "abc\nbcd", stdin: "abc\nbcd"
     end

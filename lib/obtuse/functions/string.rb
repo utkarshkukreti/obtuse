@@ -29,5 +29,9 @@ module Obtuse
     fn :St, Object, Object, Object do |x, y, z|
       push x.to_s.tr(y.to_s, z.to_s)
     end
+
+    fn :Sr, String do |x|
+      push x.reverse
+    end
   end
 end
