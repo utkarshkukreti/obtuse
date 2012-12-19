@@ -55,5 +55,10 @@ What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed\
     EOT
       e '[1[1 500#{1+2*}%{...}%~]{+.}*;]{+}*', 669171001
     end
+
+    describe "Problem #29: Number of distinct terms in a ^ b for a, b in" +
+      " 2..100" do
+      e '99#{2+}%.{1${1$^}%\;}%{~}%.&#', 9183
+    end
   end
 end
