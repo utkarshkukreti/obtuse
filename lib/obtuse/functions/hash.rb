@@ -1,7 +1,6 @@
 module Obtuse
   class Evaluator
     fn "#", Integer do |x|
-      p x
       push [*0...x]
     end
 
