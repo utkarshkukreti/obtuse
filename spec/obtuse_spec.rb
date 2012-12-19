@@ -255,6 +255,14 @@ describe Obtuse do
       end
     end
 
+    describe "I" do
+      describe "Object Object Object" do
+        e '0 1 2 I', 2
+        e '1 1 2 I', 1
+        e '0 1 {...} {.}I', [0, 0, 0, 0], stack: true
+      end
+    end
+
     describe "W" do
       describe "Lambda Lambda" do
         e '3{.}{1-}W', 0

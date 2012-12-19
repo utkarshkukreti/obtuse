@@ -126,7 +126,7 @@ module Obtuse
             eval x.expression, true
           end
         when :!
-          push falsy?(pop) ? 1 : 0
+          push truthy?(pop) ? 0 : 1
         when :"@"
           x, y, z = pop 3
           push y; push z; push x
@@ -149,12 +149,28 @@ module Obtuse
                Array === x && Array === y
             push x.send(atom, y) ? 1 : 0
           end
+        when :I
+          x, y, z = pop 3
+          if AST::Lambda === x
+            eval x.expression, true
+            if truthy?(pop)
+              AST::Lambda === y ? eval(y.expression, true) : push(y)
+            else
+              AST::Lambda === z ? eval(z.expression, true) : push(z)
+            end
+          else
+            if truthy?(x)
+              AST::Lambda === y ? eval(y.expression, true) : push(y)
+            else
+              AST::Lambda === z ? eval(z.expression, true) : push(z)
+            end
+          end
         when :W
           x, y = pop 2
           if AST::Lambda === x && AST::Lambda === y
             loop do
               eval x.expression, true
-              break if falsy?(pop)
+              break unless truthy?(pop)
               eval y.expression, true
             end
           end
@@ -210,8 +226,8 @@ module Obtuse
       @stack = @stash.pop
     end
 
-    def falsy?(x)
-      x.nil? || x == 0 || x == "" || x == []
+    def truthy?(x)
+      !(x.nil? || x == 0 || x == "" || x == [])
     end
   end
 end
