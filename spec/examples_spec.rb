@@ -19,5 +19,9 @@ describe Obtuse do
       " of the first one hundred natural numbers and the square of the sum." do
       e '101#{+}*2^101#{2^}%{+}*-', 25164150
     end
+
+    describe "Problem #16: Sum of digits of 2 ^ 1000" do
+      e '2 1000^Ts{Ti}%{+}*', 1366
+    end
   end
 end
