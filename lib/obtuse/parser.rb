@@ -28,7 +28,8 @@ module Obtuse
     end
 
     rule :expression do
-      spaces? >> (integer | string | function | lambda).repeat >> spaces?
+      spaces? >> (integer | string | function | lambda).repeat(1) >> spaces? |
+        spaces?
     end
 
     root :expression

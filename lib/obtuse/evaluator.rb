@@ -16,6 +16,8 @@ module Obtuse
         input = @transform.apply(@parser.parse(input))
       end
 
+      return if input.nil?
+
       input.each do |atom|
         case atom
         when Integer, String, Array, AST::Lambda
