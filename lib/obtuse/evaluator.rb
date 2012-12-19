@@ -199,6 +199,10 @@ module Obtuse
         when :Si
           x, y = pop 2
           push x.to_s.include?(y.to_s) ? 1 : 0
+        when :Ti
+          push pop.to_i
+        when :Ts
+          push pop.to_s
         when :St
           x, y, z = pop 3
           push x.to_s.tr(y.to_s, z.to_s)
