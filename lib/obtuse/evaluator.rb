@@ -149,6 +149,9 @@ module Obtuse
                Array === x && Array === y
             push x.send(atom, y) ? 1 : 0
           end
+        when :"\\"
+          x, y = pop 2
+          push y; push x;
         when :I
           x, y, z = pop 3
           if AST::Lambda === x

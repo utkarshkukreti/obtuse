@@ -255,6 +255,13 @@ describe Obtuse do
       end
     end
 
+    describe "\\" do
+      describe "Object Object" do
+        e %q{1 2 \\}, [2, 1], stack: true
+        e %q{[] [1] \\}, [[1], []], stack: true
+      end
+    end
+
     describe "I" do
       describe "Object Object Object" do
         e '0 1 2 I', 2
