@@ -3,7 +3,11 @@ require "spec_helper"
 describe Obtuse do
   describe "GCD" do
     # From http://www.golfscript.com/golfscript/examples.html
-    e '13483 74205 {.}{.@\%}W;', 97
+    e '13483 74205 {.}{.@\%}W;', 13483.gcd(74205)
+  end
+
+  describe "LCM" do
+    e '13483 74205 .@.@{.}{.@\%}W;\@*\/', 13483.lcm(74205)
   end
 
   describe "Project Euler" do
