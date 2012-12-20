@@ -56,6 +56,7 @@ describe Obtuse do
     describe "Problem #25: First term of Fibonacci Sequence to contain" +
       " more than 1000 digits", slow: true do
       e '[1 1{.Ts#1000<}{.@.@+@\}W]#', 4782
+      e '[1 1{.Ts#1000<}{1$1$+}W]#', 4782
     end
 
     describe <<-EOT do
