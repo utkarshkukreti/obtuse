@@ -30,7 +30,7 @@ module Obtuse
             p evaluator.stack
           else
             evaluator.eval line
-            p evaluator.peek
+            p evaluator.peek if evaluator.peek
           end
         rescue Exception => e
           puts e.message
