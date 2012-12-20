@@ -7,7 +7,7 @@ describe Obtuse do
       e "1 0 |", 1
       e "1 0 |", 1
       e "1 1 |", 1
-      e "69 3 |", 71
+      e "69 3 |", 69
     end
 
     describe "Array Array" do

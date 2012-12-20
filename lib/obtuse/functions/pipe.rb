@@ -1,7 +1,7 @@
 module Obtuse
   class Evaluator
     fn :|, Integer, Integer do |x, y|
-      push x | y
+      push x > y ? x : y
     end
 
     fn :|, Array, Array do |x, y|
