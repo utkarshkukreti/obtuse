@@ -5,7 +5,7 @@ module Obtuse
     end
 
     fn "]" do
-      mark = @marks.pop
+      mark = @marks.pop || 0
       array = @stack.slice!(mark..-1)
       push array if array
     end
