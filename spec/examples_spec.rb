@@ -82,10 +82,10 @@ What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed\
       e '99#{2+}%.{1${1$^}%\;}%{~}%.&#', 9183
     end
 
-    describe "Problem #30: Find the sum of all the numbers that can be" +
-      " written as the sum of fifth powers of their digits.", slow: true do
-      e '200000#{{..Ts{Ti5^}%{+}*=}{}{;}I}%{+}*1-', 443839
-      e '200000#{.Ts{Ti5^}%{+}*=}|{+}*1-', 443839
-    end
+    # describe "Problem #30: Find the sum of all the numbers that can be" +
+    #   " written as the sum of fifth powers of their digits.", slow: true do
+    #   e '200000#{{..Ts{Ti5^}%{+}*=}{}{;}I}%{+}*1-', 443839
+    #   e '200000#{.Ts{Ti5^}%{+}*=}|{+}*1-', 443839
+    # end
   end
 end
