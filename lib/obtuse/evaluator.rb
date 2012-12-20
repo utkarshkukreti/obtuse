@@ -9,13 +9,14 @@ module Obtuse
       @functions[name.to_s] << { types: types, block: block }
     end
 
-    attr_accessor :stdin
+    attr_accessor :stdin, :stdout
     attr_reader :stack, :marks
 
     def initialize
       @stack     = []
       @marks     = []
       @stdin     = $stdin
+      @stdout    = $stdout
       @parser    = Parser.new
       @transform = Transform.new
     end
