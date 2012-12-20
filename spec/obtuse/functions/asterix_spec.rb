@@ -31,5 +31,9 @@ describe Obtuse do
       e %q{[1 2 3] {+} *}, 6
       e %q{[1 2 3] {-} *}, -4
     end
+
+    describe "Lambda Integer" do
+      e %q{2 {2 *} 5 *}, 64
+    end
   end
 end

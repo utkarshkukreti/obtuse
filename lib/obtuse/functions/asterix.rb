@@ -32,5 +32,11 @@ module Obtuse
         eval y.expression, true
       end
     end
+
+    fn :*, AST::Lambda, Integer do |x, y|
+      y.times do
+        eval x.expression, true
+      end
+    end
   end
 end
