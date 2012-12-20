@@ -27,6 +27,12 @@ describe Obtuse do
       e '[1 1{.4000000<}{.@.@+@\@}W;;]{2%!}|{+}*', 4613732
     end
 
+    describe "Problem #4: Find the largest palindrome made from the product" +
+      " of two 3-digit numbers.", slow: true do
+      # Only checks 900..999 * 900..999
+      e '100#{900+}%.{1${1$*}%{Ts.Sr=}|~}%{|}*', 906609
+    end
+
     describe "Problem #6: Find the difference between the sum of the squares" +
       " of the first one hundred natural numbers and the square of the sum." do
       e '101#{+}*2^101#{2^}%{+}*-', 25164150
