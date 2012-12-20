@@ -22,6 +22,12 @@ describe Obtuse do
       e %q{"123" . {1$\;} %}, ["123", "123", "123"]
     end
 
+    describe "Array Integer (Select by index)" do
+      e %q{[1 2 3 4 5] 2 %}, [1, 3, 5]
+      e %q{[1 2 3 4 5] -1 %}, [5, 4, 3, 2, 1]
+      e %q{[1 2 3 4 5] -2 %}, [5, 3, 1]
+    end
+
     describe "Array Lambda (Map)" do
       e %q{[1 2 3 4] {..} %}, [1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4]
       e %q{[1 2 3] . {1$\;} %}, [[1, 2, 3], [1, 2, 3], [1, 2, 3]]

@@ -23,6 +23,11 @@ module Obtuse
       push array
     end
 
+    fn :%, Array, Integer do |x, y|
+      size = x.size - 1
+      push (y < 0 ? size.step(0, y) : 0.step(size, y)).map { |i| x[i] }
+    end
+
     fn :%, Array, AST::Lambda do |x, y|
       array = []
       mark = @stack.size
