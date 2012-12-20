@@ -16,15 +16,24 @@ RSpec.configure do |config|
       evaluator = Obtuse::Evaluator.new
       evaluator.stdin = stdin
       evaluator.stdout = StringIO.new
-      evaluator.eval(input)
+
+      if !(Array === input)
+        input = [input]
+        output = [output]
+      end
+
+      input.zip(output).each do |input, output|
+        evaluator.eval(input)
+        if options[:stack]
+          evaluator.stack.should eq output
+        else
+          evaluator.peek.should eq output
+        end
+      end
 
       if stdout
         evaluator.stdout.rewind
         evaluator.stdout.read.should eq stdout
-      elsif options[:stack]
-        evaluator.stack.should eq output
-      else
-        evaluator.peek.should eq output
       end
     end
   end

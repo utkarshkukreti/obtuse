@@ -10,5 +10,13 @@ module Obtuse
     rule lambda: { expression: subtree(:expression) } do
       AST::Lambda.new expression
     end
+
+    rule assignment: { variable: simple(:variable) } do
+      AST::Assignment.new variable.to_s
+    end
+
+    rule deassignment: { variable: simple(:variable) } do
+      AST::Deassignment.new variable.to_s
+    end
   end
 end

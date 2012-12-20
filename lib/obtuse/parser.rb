@@ -27,9 +27,23 @@ module Obtuse
       str("}") >> spaces?
     end
 
+    rule :variable do
+      match["a-zA-Z_"].repeat(1).as(:variable) >> spaces?
+    end
+
+    rule :assignment do
+      str(":") >> spaces? >> variable.as(:assignment)
+    end
+
+    rule :deassignment do
+      variable.as(:deassignment)
+    end
+
     rule :expression do
-      spaces? >> (integer | string | function | lambda).repeat(1) >> spaces? |
-        spaces?
+      spaces? >>
+        (assignment | integer | string | function | lambda | deassignment).
+        repeat(1) >> spaces? |
+      spaces?
     end
 
     root :expression

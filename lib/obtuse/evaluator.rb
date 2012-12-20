@@ -15,6 +15,7 @@ module Obtuse
     def initialize
       @stack     = []
       @marks     = []
+      @variables = {}
       @stdin     = $stdin
       @stdout    = $stdout
       @parser    = Parser.new
@@ -29,7 +30,8 @@ module Obtuse
       return if input.nil?
 
       input.each do |atom|
-        if Symbol === atom
+        case atom
+        when Symbol
           fn = self.class.functions[atom.to_s].find do |fn|
             types = fn[:types]
             @stack.last(types.size).zip(types).all? do |x, y|
@@ -43,8 +45,13 @@ module Obtuse
             raise ArgumentError.new "Function `#{atom}` does not match" +
               " preceding" +
               " arguments.\nLast #{[7, @stack.size].min} elements of the" +
-              " stack have classes: " + @stack.last(7).map(&:class).inspect
+              " stack have classes: " + @stack.last(7).map(&:class).inspect +
+              @stack.last(7).to_yaml
           end
+        when AST::Assignment
+          @variables[atom.variable] = peek
+        when AST::Deassignment
+          push @variables[atom.variable] if @variables[atom.variable]
         else
           push atom
         end

@@ -1,6 +1,8 @@
 require "parslet"
 
 require "obtuse/ast/lambda"
+require "obtuse/ast/assignment"
+require "obtuse/ast/deassignment"
 
 require "obtuse/parser"
 require "obtuse/transform"
