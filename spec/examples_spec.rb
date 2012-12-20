@@ -27,6 +27,11 @@ describe Obtuse do
       e '[1 1{.4000000<}{.@.@+@\@}W;;]{2%!}|{+}*', 4613732
     end
 
+    describe "Problem #3: What is the largest prime factor of the number" +
+      " 600851475143 ?", slow: true do
+      e '600851475143 2{\.1>}{\{1$1$%!}{1$1$/@;\}W1+}W;1-', 6857
+    end
+
     describe "Problem #4: Find the largest palindrome made from the product" +
       " of two 3-digit numbers.", slow: true do
       # Only checks 900..999 * 900..999
