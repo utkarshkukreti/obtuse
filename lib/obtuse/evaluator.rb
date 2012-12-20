@@ -46,7 +46,7 @@ module Obtuse
               " preceding" +
               " arguments.\nLast #{[7, @stack.size].min} elements of the" +
               " stack have classes: " + @stack.last(7).map(&:class).inspect +
-              @stack.last(7).to_yaml
+              "\n" + @stack.last(7).to_yaml
           end
         when AST::Assignment
           @variables[atom.variable] = peek
