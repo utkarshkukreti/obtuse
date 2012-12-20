@@ -7,5 +7,14 @@ module Obtuse
     fn :|, Array, Array do |x, y|
       push x | y
     end
+
+    fn :|, Array, AST::Lambda do |x, y|
+      array = x.select do |el|
+        push el
+        eval y.expression, true
+        truthy?(pop)
+      end
+      push array
+    end
   end
 end

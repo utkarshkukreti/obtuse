@@ -15,5 +15,9 @@ describe Obtuse do
       e %q{[1 2 3 1 2 3] [] |}, [1, 2, 3]
       e %q{[] [] |}, []
     end
+
+    describe "Array Lambda" do
+      e %q{[1 2 3 4] {2 %}|}, [1, 3]
+    end
   end
 end
