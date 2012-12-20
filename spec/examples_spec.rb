@@ -19,6 +19,7 @@ describe Obtuse do
       e '1000#{{.3%}{{.5%}{;}{}I}{}I}%{+}*', 233168
       e '1000#{..3%!\5%!|{}{;}I}%{+}*', 233168
       e '1000#{.3%!\5%!|}|{+}*', 233168
+      e '1000#{.3%\5%&!}|{+}*', 233168
     end
 
     describe "Problem #2: By considering the terms in the Fibonacci sequence" +
