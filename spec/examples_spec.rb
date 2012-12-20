@@ -26,6 +26,7 @@ describe Obtuse do
       " whose values do not exceed four million, find the sum of the" +
       " even-valued terms." do
       e '[1 1{.4000000<}{.@.@+@\@}W;;]{2%!}|{+}*', 4613732
+      e '[1 1{.4000000<}{1$1$+}W;]{2%!}|{+}*', 4613732
     end
 
     describe "Problem #3: What is the largest prime factor of the number" +
