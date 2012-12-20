@@ -21,6 +21,12 @@ describe Obtuse do
       e '1000#{.3%!\5%!|}|{+}*', 233168
     end
 
+    describe "Problem #2: By considering the terms in the Fibonacci sequence" +
+      " whose values do not exceed four million, find the sum of the" +
+      " even-valued terms." do
+      e '[1 1{.4000000<}{.@.@+@\@}W;;]{2%!}|{+}*', 4613732
+    end
+
     describe "Problem #6: Find the difference between the sum of the squares" +
       " of the first one hundred natural numbers and the square of the sum." do
       e '101#{+}*2^101#{2^}%{+}*-', 25164150
